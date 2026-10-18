@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectIcon from './ProjectIcon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { title, type, year, summary, icon } = project.data;
+const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+---
+
+<a class="tile" href={`/projects/${project.id}/`}>
+  <span class="top">
+    <ProjectIcon name={icon} />
+    <span class="meta">{typeLabel}, {year}</span>
+  </span>
+  <span class="bottom">
+    <h3>{title}</h3>
+    <p>{summary}</p>
+  </span>
+</a>
+
+<style>
+  .tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-28);
+    min-height: 190px;
+    padding: var(--space-20);
+    border: var(--rule);
+    margin: 0 -1px -1px 0;
+  }
+  .tile:hover {
+    outline: var(--hover-inset-width) solid var(--color-rule);
+    outline-offset: var(--hover-inset-offset);
+  }
+  .tile:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    text-decoration-thickness: var(--underline-thickness);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-12);
+    font-size: var(--text-14);
+  }
+  h3 {
+    font-size: var(--text-26);
+    line-height: var(--leading-snug);
+  }
+  p {
+    margin-top: var(--space-6);
+    font-size: var(--text-15);
+    font-style: italic;
+  }
+</style>

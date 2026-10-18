@@ -1,0 +1,46 @@
+---
+interface Props {
+  types: string[];
+}
+const { types } = Astro.props;
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+---
+
+<!-- Hidden until the script runs: without JS every project shows and there is no filter. -->
+<div class="container filter" role="group" aria-label="Filter projects by type" data-project-filter hidden>
+  <button type="button" data-filter="all" aria-pressed="true">All</button>
+  {types.map((t) => <button type="button" data-filter={t} aria-pressed="false">{cap(t)}</button>)}
+</div>
+
+<style>
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-22);
+    padding-bottom: var(--space-18);
+  }
+  .filter[hidden] {
+    display: none;
+  }
+  button {
+    font-size: var(--text-16);
+    padding-block: var(--space-4);
+    line-height: var(--leading-body);
+  }
+</style>
+
+<script>
+  const group = document.querySelector<HTMLElement>('[data-project-filter]');
+  if (group) {
+    const buttons = [...group.querySelectorAll<HTMLButtonElement>('button')];
+    const rows = [...document.querySelectorAll<HTMLElement>('[data-type]')];
+    group.hidden = false;
+    for (const b of buttons) {
+      b.addEventListener('click', () => {
+        const f = b.dataset.filter;
+        for (const x of buttons) x.setAttribute('aria-pressed', String(x === b));
+        for (const r of rows) r.hidden = !(f === 'all' || r.dataset.type === f);
+      });
+    }
+  }
+</script>

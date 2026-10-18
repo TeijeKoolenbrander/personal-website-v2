@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectIcon from './ProjectIcon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { title, type, year, description, icon } = project.data;
+const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+---
+
+<a class="row" href={`/projects/${project.id}/`} data-type={type}>
+  <ProjectIcon name={icon} />
+  <span class="content">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </span>
+  <span class="meta">{typeLabel}<br />{year}</span>
+</a>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: var(--space-20);
+    align-items: start;
+    padding: var(--space-22) 0;
+    border-top: var(--rule);
+  }
+  .row:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    text-decoration-thickness: var(--underline-thickness);
+  }
+  .row[hidden] {
+    display: none;
+  }
+  h3 {
+    font-size: var(--text-24);
+    line-height: var(--leading-heading);
+  }
+  p {
+    margin-top: var(--space-6);
+    font-size: var(--text-15);
+    line-height: var(--leading-body);
+  }
+  .meta {
+    font-size: var(--text-14);
+    line-height: var(--leading-body);
+    text-align: right;
+  }
+  @media (max-width: 600px) {
+    .row {
+      grid-template-columns: 44px minmax(0, 1fr);
+    }
+    .meta {
+      grid-column: 2;
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+- id: now
+  label: Now
+  title: Building my own company
+  note: WeChat mini programs, mini games and SaaS.
+  current: true
+  order: 1
+- id: graduation
+  label: "2027"
+  title: Computer Engineering, NYU Tandon
+  note: Expected graduation, class of 2027.
+  order: 2
+- id: first-hardware
+  label: "2023"
+  title: First hardware project
+  note: A wristband that queues my playlist based on my heart rate.
+  order: 3
+- id: first-code
+  label: "2021"
+  title: First coding project
+  note: A tic-tac-toe game.
+  order: 4
+- id: born
+  label: "2005"
+  title: Born
+  note: Shanghai.
+  order: 5

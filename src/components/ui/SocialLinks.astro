@@ -1,0 +1,48 @@
+---
+import { socials } from '../../data/socials';
+import Icon from './Icon.astro';
+---
+
+<ul class="social-list" role="list">
+  {
+    socials.map((s) => (
+      <li>
+        <a href={s.url} target="_blank" rel="noopener noreferrer">
+          <Icon name={s.icon} size={20} />
+          <span>
+            {s.label}
+            <span class="visually-hidden"> (opens in new tab)</span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .social-list {
+    border-bottom: var(--rule);
+    font-size: var(--text-18);
+  }
+  li {
+    border-top: var(--rule);
+  }
+  a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    min-height: 44px;
+    padding: var(--space-10) 0;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:hover span {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    text-decoration-thickness: var(--underline-thickness);
+  }
+  a :global(svg) {
+    flex: none;
+  }
+</style>

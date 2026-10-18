@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageTitle from '../../components/ui/PageTitle.astro';
+import ProjectsMark from '../../components/drawings/ProjectsMark.astro';
+import ProjectFilter from '../../components/projects/ProjectFilter.astro';
+import ProjectRow from '../../components/projects/ProjectRow.astro';
+import { getAllProjects } from '../../data/projects';
+
+const projects = await getAllProjects();
+const types = ['software', 'hardware', 'research', 'coursework'].filter((t) => projects.some((p) => p.data.type === t));
+---
+
+<BaseLayout
+  title="Projects — Teije Koolenbrander"
+  description="Software projects and coursework by Teije Koolenbrander, including WeChat mini games and Chess.com game analysis."
+  currentNav="projects"
+>
+  <PageTitle title="Projects" subtitle="Things I've designed, built, and shipped." tight>
+    <ProjectsMark />
+  </PageTitle>
+  <ProjectFilter types={types} />
+  <section class="container list">
+    <h2 class="visually-hidden">All projects</h2>
+    <div class="rows">
+      {projects.map((p) => <ProjectRow project={p} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list {
+    padding-bottom: var(--space-56);
+  }
+  .rows {
+    border-bottom: var(--rule);
+  }
+</style>

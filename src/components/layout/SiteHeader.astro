@@ -1,0 +1,63 @@
+---
+import { site } from '../../data/site';
+
+export type NavKey = 'home' | 'about' | 'projects' | 'companies' | 'contact';
+
+interface Props {
+  current?: NavKey | null;
+  /** True on project detail pages: the section is active, not the current page. */
+  currentIsSection?: boolean;
+}
+const { current = null, currentIsSection = false } = Astro.props;
+
+const items: { key: NavKey; label: string; href: string }[] = [
+  { key: 'home', label: 'Home', href: '/' },
+  { key: 'about', label: 'About', href: '/about/' },
+  { key: 'projects', label: 'Projects', href: '/projects/' },
+  { key: 'companies', label: 'Companies', href: '/companies/' },
+  { key: 'contact', label: 'Contact', href: '/contact/' },
+];
+---
+
+<header class="container site-header">
+  <a class="wordmark" href="/">{site.wordmark}</a>
+  <nav aria-label="Main">
+    {
+      items.map((i) => (
+        <a
+          href={i.href}
+          aria-current={i.key === current ? (currentIsSection ? 'true' : 'page') : undefined}
+          class:list={{ active: i.key === current && currentIsSection }}
+        >
+          {i.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-12) var(--space-24);
+    padding-block: var(--header-pad-y);
+    font-size: var(--text-16);
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-20);
+  }
+  a {
+    padding-block: var(--space-4);
+  }
+  /* aria-current="true" (section) is not covered by the global page rule. */
+  a.active {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    text-decoration-thickness: var(--underline-thickness);
+  }
+</style>

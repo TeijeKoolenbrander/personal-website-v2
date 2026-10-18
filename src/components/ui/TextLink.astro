@@ -1,0 +1,13 @@
+---
+interface Props {
+  href: string;
+  underline?: 'hover' | 'always';
+  external?: boolean;
+  class?: string;
+}
+const { href, underline = 'hover', external = false, class: className } = Astro.props;
+const classes = [underline === 'always' ? 'link-underline' : '', className ?? ''].filter(Boolean).join(' ') || undefined;
+const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={href} class={classes} {...ext}><slot />{external && <span class="visually-hidden"> (opens in new tab)</span>}</a>

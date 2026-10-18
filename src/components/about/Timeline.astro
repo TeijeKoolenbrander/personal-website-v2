@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  milestones: CollectionEntry<'milestones'>[];
+}
+const { milestones } = Astro.props;
+---
+
+<ol class="timeline" role="list">
+  {
+    milestones.map((m) => (
+      <li class:list={{ current: m.data.current }}>
+        <span class="label">{m.data.label}</span>
+        <span class="dot" aria-hidden="true" />
+        <p class="title">{m.data.title}</p>
+        {m.data.note && <p class="note">{m.data.note}</p>}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    margin-left: var(--timeline-gutter);
+    border-left: var(--rule);
+  }
+  li {
+    position: relative;
+    padding: 0 0 var(--space-28) 26px;
+  }
+  li:last-child {
+    padding-bottom: 0;
+  }
+  .label {
+    position: absolute;
+    left: calc(var(--timeline-gutter) * -1);
+    top: 3px;
+    font-size: var(--text-15);
+  }
+  .dot {
+    position: absolute;
+    left: -4px;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-ink);
+  }
+  .current .dot {
+    left: -5px;
+    background: var(--color-paper);
+    border: var(--rule);
+  }
+  .title {
+    font-size: var(--text-20);
+    line-height: var(--leading-normal);
+  }
+  .note {
+    margin-top: var(--space-2);
+    font-size: var(--text-15);
+    font-style: italic;
+  }
+</style>

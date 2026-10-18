@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CompanyLogo from './CompanyLogo.astro';
+import TextLink from '../ui/TextLink.astro';
+
+interface Props {
+  company: CollectionEntry<'companies'>;
+}
+const { name, description, founded, website, websiteLabel, logo, mark } = Astro.props.company.data;
+const label = websiteLabel ?? (website ? new URL(website).host.replace(/^www\./, '') : '');
+---
+
+<article class="cmp">
+  <div>
+    <CompanyLogo logo={logo} mark={mark} alt={logo ? `${name} logo` : ''} />
+    <h2>{name}</h2>
+  </div>
+  <div>
+    <p class="desc">{description}</p>
+    <div class="meta">
+      <span>Founded {founded}</span>
+      {website && <TextLink href={website} underline="always" external>{label}</TextLink>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .cmp {
+    display: grid;
+    grid-template-columns: var(--cols-split);
+    gap: var(--space-32);
+    padding: var(--space-36) 0;
+    border-top: var(--rule);
+  }
+  h2 {
+    margin-top: var(--space-20);
+    font-size: var(--text-40);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-tight);
+  }
+  .desc {
+    font-size: var(--text-17);
+    line-height: var(--leading-long);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-28);
+    margin-top: var(--space-20);
+    font-size: var(--text-15);
+  }
+  @media (max-width: 600px) {
+    .cmp {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

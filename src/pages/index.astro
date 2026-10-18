@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroTraceWave from '../components/drawings/HeroTraceWave.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import ProjectTile from '../components/projects/ProjectTile.astro';
+import CompanyRow from '../components/companies/CompanyRow.astro';
+import { getHomeProjects, getCompanies } from '../data/projects';
+import { site } from '../data/site';
+import { socials } from '../data/socials';
+
+const projects = await getHomeProjects(4);
+const companies = await getCompanies();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: `${site.url}/`,
+  email: `mailto:${site.email}`,
+  jobTitle: 'Computer Engineering Student',
+  sameAs: socials.map((s) => s.url),
+};
+---
+
+<BaseLayout
+  title="Teije Koolenbrander"
+  description={site.description}
+  currentNav="home"
+  jsonLd={jsonLd}
+>
+  <section class="container hero">
+    <h1>Teije <br />Koolenbrander</h1>
+    <div class="intro">
+      <p class="tagline">{site.tagline}</p>
+      <p class="lede">
+        I build software and hardware. Here you'll find exactly what I've been working on.
+      </p>
+    </div>
+  </section>
+
+  <div class="container wave">
+    <HeroTraceWave />
+  </div>
+
+  <section class="container projects">
+    <SectionHeader title="Projects" linkText="All projects" href="/projects/" />
+    <div class="tiles">
+      {projects.map((p) => <ProjectTile project={p} />)}
+    </div>
+  </section>
+
+  <section class="container companies">
+    <SectionHeader title="Companies" linkText="Company page" href="/companies/" />
+    <div>
+      {companies.map((c, i) => <CompanyRow company={c} last={i === companies.length - 1} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: var(--space-48);
+    padding-bottom: var(--space-8);
+  }
+  h1 {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: var(--cols-split);
+    gap: var(--space-24);
+    margin-top: var(--space-32);
+  }
+  .tagline {
+    font-size: var(--text-22);
+    font-style: italic;
+    line-height: var(--leading-normal);
+  }
+  .lede {
+    line-height: var(--leading-long);
+  }
+  .wave {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-8);
+  }
+  .projects {
+    padding-top: var(--space-40);
+    padding-bottom: 52px;
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .companies {
+    padding-bottom: var(--space-48);
+  }
+  @media (max-width: 600px) {
+    .intro,
+    .tiles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

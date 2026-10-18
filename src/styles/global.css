@@ -1,0 +1,448 @@
+/*
+ * Global base styles. tokens.css must be imported first.
+ * The developer imports the font in the layout:
+ *   import "@fontsource-variable/newsreader";            (roman, wght axis)
+ *   import "@fontsource-variable/newsreader/wght-italic.css";
+ * (or the opsz variants if optical sizing is wanted; family name stays "Newsreader Variable")
+ */
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* ---------- Base typography ---------- */
+html {
+  background: var(--color-bg);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-16);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--weight-regular);
+  color: inherit;
+}
+
+em,
+i,
+cite {
+  font-style: italic;
+}
+
+strong,
+b {
+  font-weight: 500; /* variable font; only used inside prose, headings stay 400 */
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* ---------- Layout helper ---------- */
+/* Outer box is --container wide and includes the gutters. */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Links ---------- */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--underline-offset);
+  text-decoration-thickness: var(--underline-thickness);
+}
+
+/* Always-underlined inline link (About, Companies, Contact email, prose). */
+.link-underline,
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: var(--underline-offset);
+  text-decoration-thickness: var(--underline-thickness);
+}
+
+/* Current page in nav, and any "selected" text control. */
+a[aria-current="page"],
+[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: var(--underline-offset);
+  text-decoration-thickness: var(--underline-thickness);
+}
+
+[aria-pressed]:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--underline-offset);
+  text-decoration-thickness: var(--underline-thickness);
+}
+
+/* Cards, rows and tiles that are links: the row itself never underlines,
+   its heading does (component CSS targets the h3). */
+a.tile:hover,
+a.row:hover {
+  text-decoration: none;
+}
+
+/* ---------- Focus ---------- */
+:focus {
+  outline-color: var(--color-focus);
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* Tiles and bordered buttons: the ring sits outside the 1px border. */
+a.tile:focus-visible,
+.btn:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ---------- Utilities ---------- */
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-8);
+  left: var(--space-8);
+  z-index: 100;
+  padding: var(--space-10) var(--space-16);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: var(--rule);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Bordered button (one style only): white, 1px black, square, inset-outline hover. */
+.btn {
+  display: inline-block;
+  padding: var(--space-10) var(--space-20);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: var(--rule);
+  border-radius: var(--radius);
+  font-size: var(--text-16);
+  line-height: var(--leading-body);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  text-decoration: none;
+  outline: var(--hover-inset-width) solid var(--color-rule);
+  outline-offset: var(--hover-inset-offset);
+}
+
+.btn:focus-visible:hover {
+  outline-width: var(--focus-width);
+  outline-offset: 2px;
+}
+
+/* ---------- Line drawings (shared by every page SVG) ---------- */
+/* SVG markup: <path class="ln draw" pathLength="1" d="..."> and <g class="via"> for dots.
+   Dots/rings use fill="currentColor" (or var(--color-paper) for hollow rings), never a literal colour. */
+svg {
+  color: var(--color-ink);
+}
+
+.ln {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw var(--draw-duration) var(--draw-ease) var(--draw-delay) forwards;
+}
+
+.via {
+  opacity: 0;
+  animation: fade var(--fade-duration) ease var(--fade-delay, var(--fade-delay-home)) forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .draw {
+    animation: none !important;
+    stroke-dashoffset: 0;
+  }
+
+  .via {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
+/* ---------- Prose: rendered Markdown on the project detail page ---------- */
+.prose {
+  max-width: var(--prose-width);
+  font-size: var(--text-17);
+  line-height: var(--leading-long);
+  overflow-wrap: break-word;
+}
+
+.prose > * + * {
+  margin-top: var(--space-18);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h2 {
+  margin-top: var(--space-48);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-30);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-section);
+}
+
+.prose h3 {
+  margin-top: var(--space-32);
+  font-size: var(--text-24);
+  line-height: var(--leading-heading);
+  font-style: italic;
+}
+
+.prose h4 {
+  margin-top: var(--space-24);
+  font-size: var(--text-18);
+  font-style: italic;
+  line-height: var(--leading-normal);
+}
+
+.prose h2 + *,
+.prose h3 + *,
+.prose h4 + * {
+  margin-top: var(--space-12);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-24);
+}
+
+.prose ul {
+  list-style: square;
+}
+
+.prose li + li {
+  margin-top: var(--space-6);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: var(--space-6);
+}
+
+.prose li::marker {
+  color: var(--color-ink);
+}
+
+.prose blockquote {
+  padding-left: var(--space-20);
+  border-left: var(--rule);
+  font-style: italic;
+}
+
+.prose hr {
+  margin-block: var(--space-40);
+  border: 0;
+  border-top: var(--rule);
+}
+
+.prose img {
+  width: 100%;
+  border: var(--rule);
+  margin-block: var(--space-32);
+}
+
+.prose figure {
+  margin-block: var(--space-32);
+}
+
+.prose figure img {
+  margin-block: 0;
+}
+
+.prose figcaption {
+  margin-top: var(--space-8);
+  font-size: var(--text-14);
+  font-style: italic;
+  line-height: var(--leading-body);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0 var(--space-4);
+  border: var(--rule);
+}
+
+.prose pre {
+  padding: var(--space-16);
+  border: var(--rule);
+  overflow-x: auto;
+  font-size: var(--text-14);
+  line-height: var(--leading-body);
+}
+
+.prose pre code {
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+}
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: var(--text-16);
+  line-height: var(--leading-body);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-8) var(--space-16) var(--space-8) 0;
+  border-top: var(--rule);
+  text-align: left;
+  vertical-align: top;
+  font-weight: var(--weight-regular);
+}
+
+.prose th {
+  font-style: italic;
+}
+
+.prose tr:last-child td {
+  border-bottom: var(--rule);
+}

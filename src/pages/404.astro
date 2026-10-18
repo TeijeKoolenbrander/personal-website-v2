@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found — Teije Koolenbrander" description="This page could not be found." noindex>
+  <section class="container nf">
+    <h1>Page not found</h1>
+    <p class="sub">The page you're looking for doesn't exist or has moved.</p>
+    <p><a class="link-underline back" href="/">Back to the home page</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-top: var(--space-44);
+    padding-bottom: var(--space-72);
+  }
+  h1 {
+    font-size: var(--text-title);
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-display);
+  }
+  .back {
+    display: inline-block;
+    padding-block: 4px;
+  }
+  .sub {
+    margin-block: var(--space-20) var(--space-24);
+    font-size: var(--text-22);
+    font-style: italic;
+    line-height: var(--leading-normal);
+  }
+</style>

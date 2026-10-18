@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTitle from '../components/ui/PageTitle.astro';
+import CompaniesMark from '../components/drawings/CompaniesMark.astro';
+import CompanyEntry from '../components/companies/CompanyEntry.astro';
+import { getCompanies } from '../data/projects';
+
+const companies = await getCompanies();
+---
+
+<BaseLayout
+  title="Companies — Teije Koolenbrander"
+  description="The software company Teije Koolenbrander founded in 2026: mainly WeChat mini programs and mini games, plus SaaS solutions for businesses."
+  currentNav="companies"
+>
+  <PageTitle title="Companies">
+    <CompaniesMark />
+  </PageTitle>
+  <section class="container list">
+    <div class="entries">
+      {companies.map((c) => <CompanyEntry company={c} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list {
+    padding-bottom: var(--space-56);
+  }
+  .entries {
+    border-bottom: var(--rule);
+  }
+</style>

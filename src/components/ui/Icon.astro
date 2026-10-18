@@ -1,0 +1,40 @@
+---
+// Inline Tabler icons (MIT), read from @tabler/icons at build time. No CDN, no webfont.
+import github from '@tabler/icons/outline/brand-github.svg?raw';
+import linkedin from '@tabler/icons/outline/brand-linkedin.svg?raw';
+import instagram from '@tabler/icons/outline/brand-instagram.svg?raw';
+import spotify from '@tabler/icons/outline/brand-spotify.svg?raw';
+import music from '@tabler/icons/outline/music.svg?raw';
+import type { SocialIcon } from '../../data/socials';
+
+interface Props {
+  name: SocialIcon;
+  size?: number;
+}
+const { name, size = 20 } = Astro.props;
+
+const raw: Record<SocialIcon, string> = {
+  'brand-github': github,
+  'brand-linkedin': linkedin,
+  'brand-instagram': instagram,
+  'brand-spotify': spotify,
+  music,
+};
+// Keep only the drawing elements; wrap them in our own <svg>.
+const inner = raw[name].replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>[\s\S]*$/, '');
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={inner}
+/>

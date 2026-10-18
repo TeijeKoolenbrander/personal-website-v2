@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  company: CollectionEntry<'companies'>;
+  last?: boolean;
+}
+const { company, last = false } = Astro.props;
+---
+
+<a class:list={['co', { last }]} href="/companies/">
+  <h3>{company.data.name}</h3>
+  <p>{company.data.summary}</p>
+</a>
+
+<style>
+  .co {
+    display: grid;
+    grid-template-columns: var(--cols-split);
+    gap: var(--space-24);
+    padding: var(--space-24) 0;
+    border-top: var(--rule);
+  }
+  .co.last {
+    border-bottom: var(--rule);
+  }
+  .co:hover {
+    text-decoration: none;
+  }
+  .co:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    text-decoration-thickness: var(--underline-thickness);
+  }
+  h3 {
+    font-size: var(--text-34);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-tight);
+  }
+  p {
+    font-size: var(--text-16);
+    line-height: var(--leading-relaxed);
+  }
+  @media (max-width: 600px) {
+    .co {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

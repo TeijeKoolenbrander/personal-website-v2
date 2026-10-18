@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTitle from '../components/ui/PageTitle.astro';
+import AboutMark from '../components/drawings/AboutMark.astro';
+import Timeline from '../components/about/Timeline.astro';
+import TextLink from '../components/ui/TextLink.astro';
+import { socialById } from '../data/socials';
+
+const milestones = (await getCollection('milestones')).sort((a, b) => a.data.order - b.data.order);
+const spotify = socialById('spotify');
+const netease = socialById('netease');
+---
+
+<BaseLayout
+  title="About — Teije Koolenbrander"
+  description="Teije Koolenbrander is a computer engineering student at NYU Tandon (Class of 2027) who is always building something."
+  currentNav="about"
+>
+  <PageTitle title="About" subtitle="From the pool to the workbench.">
+    <AboutMark />
+  </PageTitle>
+
+  <section class="container bio">
+    <div class="photo">
+      <Picture
+        src={portrait}
+        alt="Teije Koolenbrander, portrait in a light-blue button-down shirt"
+        formats={['avif', 'webp']}
+        fallbackFormat="jpg"
+        widths={[320, 480, 680, 1000, 1148]}
+        sizes="(max-width: 600px) calc(100vw - 40px), 340px"
+        width={1148}
+        height={1435}
+        loading="eager"
+        fetchpriority="high"
+        quality={72}
+      />
+    </div>
+    <div class="text">
+      <p>I'm Teije, a computer engineering student at NYU Tandon. I graduate in 2027.</p>
+      <p>
+        I'm Dutch and Chinese, and I was born in Shanghai. Today I'm based in Beijing, New York and Singapore.
+      </p>
+      <p>I'm always building something. Sometimes it's software, sometimes it's hardware, and sometimes it's both.</p>
+    </div>
+  </section>
+
+  <section class="container along">
+    <h2>Along the way</h2>
+    <Timeline milestones={milestones} />
+  </section>
+
+  <section class="container off-wrap">
+    <div class="off">
+      <h2>Off the clock</h2>
+      <p>
+        I used to swim competitively. These days I play basketball and work on small hardware projects. There's usually music
+        on too. You can see what I'm listening to on <TextLink href={spotify.url} underline="always" external>{spotify.label}</TextLink> and <TextLink
+          href={netease.url}
+          underline="always"
+          external>{netease.label}</TextLink
+        >.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h2 {
+    font-size: var(--text-30);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-section);
+  }
+  .bio {
+    display: grid;
+    grid-template-columns: var(--cols-about);
+    gap: var(--space-32);
+    padding-bottom: var(--space-56);
+  }
+  .photo {
+    aspect-ratio: 4 / 5;
+    border: var(--rule);
+    overflow: hidden;
+  }
+  .photo :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-18);
+    font-size: var(--text-17);
+    line-height: var(--leading-long);
+  }
+  .along {
+    padding-bottom: var(--space-56);
+  }
+  .along h2 {
+    margin-bottom: var(--space-28);
+  }
+  /* The rule spans the container's content box, as in the mockup. */
+  .off-wrap {
+    padding-top: 0;
+  }
+  .off {
+    display: grid;
+    grid-template-columns: var(--cols-about);
+    gap: var(--space-32);
+    padding: var(--space-32) 0 var(--space-56);
+    border-top: var(--rule);
+  }
+  .off p {
+    font-size: var(--text-17);
+    line-height: var(--leading-long);
+  }
+  @media (max-width: 600px) {
+    .bio,
+    .off {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

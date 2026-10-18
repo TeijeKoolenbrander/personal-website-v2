@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTitle from '../components/ui/PageTitle.astro';
+import ContactMark from '../components/drawings/ContactMark.astro';
+import SocialLinks from '../components/ui/SocialLinks.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact — Teije Koolenbrander"
+  description="Get in touch with Teije Koolenbrander for work, collaborations, or to say hello."
+  currentNav="contact"
+>
+  <PageTitle title="Contact" subtitle="For work, collaborations, or to say hello.">
+    <ContactMark />
+  </PageTitle>
+
+  <section class="container email-block">
+    <p class="label">Email</p>
+    <a class="email link-underline" href={`mailto:${site.email}`}>{site.email}</a>
+    <p class="note">Email is the best way to reach me.</p>
+  </section>
+
+  <section class="container elsewhere-wrap">
+    <div class="elsewhere">
+      <h2>Elsewhere</h2>
+      <SocialLinks />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .email-block {
+    padding-bottom: var(--space-40);
+  }
+  .label {
+    font-size: var(--text-15);
+  }
+  .email {
+    display: inline-block;
+    margin-top: var(--space-6);
+    font-size: var(--text-contact-email);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-tight);
+    overflow-wrap: anywhere;
+  }
+  .note {
+    margin-top: var(--space-16);
+    font-size: var(--text-17);
+    font-style: italic;
+  }
+  .elsewhere {
+    display: grid;
+    grid-template-columns: var(--cols-about);
+    gap: var(--space-32);
+    padding: var(--space-32) 0 var(--space-56);
+    border-top: var(--rule);
+  }
+  h2 {
+    font-size: var(--text-30);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-section);
+  }
+  @media (max-width: 600px) {
+    .elsewhere {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-20);
+    }
+  }
+</style>

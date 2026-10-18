@@ -1,0 +1,155 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectIcon from '../../components/projects/ProjectIcon.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { title, type, year, summary, description, icon, repo } = project.data;
+const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+const hasBody = Boolean(project.body && project.body.trim());
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={`${title} — Teije Koolenbrander`}
+  description={summary}
+  currentNav="projects"
+  currentIsSection
+>
+  <div class="container detail">
+    <p class="back"><a href="/projects/"><span aria-hidden="true">←</span> All projects</a></p>
+
+    <div class="title-row">
+      <h1>{title}</h1>
+      <ProjectIcon name={icon} size={64} animate />
+    </div>
+    <p class="summary">{summary}</p>
+
+    <div class="meta-bar">
+      <dl>
+        <div>
+          <dt>Type</dt>
+          <dd>{typeLabel}</dd>
+        </div>
+        <div>
+          <dt>Year</dt>
+          <dd>{year}</dd>
+        </div>
+      </dl>
+      {
+        repo && (
+          <a class="btn" href={repo} target="_blank" rel="noopener noreferrer">
+            View on GitHub<span class="visually-hidden"> (opens in new tab)</span> <span aria-hidden="true">↗</span>
+          </a>
+        )
+      }
+    </div>
+
+    <div class="body prose">
+      {hasBody ? <Content /> : <p>{description}</p>}
+    </div>
+
+    <div class="end-bar">
+      <a href="/projects/"><span aria-hidden="true">←</span> All projects</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .detail {
+    padding-top: var(--space-44);
+    padding-bottom: var(--space-56);
+  }
+  .back {
+    margin-bottom: var(--space-28);
+    font-size: var(--text-15);
+  }
+  .back a {
+    display: inline-block;
+    padding-block: var(--space-4);
+  }
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: var(--space-16) var(--space-24);
+  }
+  h1 {
+    flex: 1 1 20rem;
+    font-size: var(--text-title-detail);
+    line-height: 0.95;
+    letter-spacing: var(--tracking-display);
+    overflow-wrap: break-word;
+  }
+  .title-row :global(.project-icon) {
+    align-self: flex-end;
+  }
+  .summary {
+    max-width: 40rem;
+    margin-top: var(--space-20);
+    font-size: var(--text-22);
+    font-style: italic;
+    line-height: var(--leading-normal);
+  }
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-12) var(--space-40);
+    margin-top: var(--space-36);
+    padding: var(--space-16) 0;
+    border-top: var(--rule);
+    border-bottom: var(--rule);
+  }
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12) var(--space-40);
+  }
+  dt {
+    font-size: var(--text-14);
+  }
+  dd {
+    font-size: var(--text-17);
+  }
+  .btn {
+    margin-left: auto;
+  }
+  .body {
+    margin-top: var(--space-40);
+  }
+  .end-bar {
+    margin-top: var(--space-56);
+    padding-top: var(--space-24);
+    border-top: var(--rule);
+  }
+  .end-bar a {
+    display: inline-block;
+    padding-block: var(--space-4);
+  }
+  @media (max-width: 600px) {
+    .title-row :global(.project-icon) {
+      align-self: flex-start;
+    }
+    .meta-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .btn {
+      margin-left: 0;
+      justify-self: start;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
