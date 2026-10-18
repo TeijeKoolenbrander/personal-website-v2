@@ -5,7 +5,7 @@ Personal website. Astro (static output), TypeScript (strict), plain CSS. Spec: `
 **Hosted on Cloudflare Pages**, deployed automatically from the `main` branch of the GitHub repo
 (`TeijeKoolenbrander/personal-website-v2`). Live at https://www.teijekoolenbrander.com.
 
-Requires Node 22.22 or newer (`.node-version` pins `22`).
+Requires Node 22.22 or newer (`.node-version` pins `22.22.0`).
 
 ```sh
 npm install

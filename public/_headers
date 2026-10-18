@@ -6,7 +6,9 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Cache-Control: public, max-age=600, must-revalidate
+
+# No Cache-Control on /*: Pages joins duplicate header values with commas, so each
+# path below gets exactly one value, and everything else uses the Pages default.
 
 # Hashed build assets never change: cache for a year.
 /_astro/*

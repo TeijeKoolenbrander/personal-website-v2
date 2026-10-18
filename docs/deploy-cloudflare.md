@@ -10,7 +10,7 @@ Build settings you will need:
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Production branch | `main` |
-| Node version | 22 (the repo has a `.node-version` file saying `22`) |
+| Node version | 22.22.0 (the repo has a `.node-version` file saying `22.22.0`) |
 
 Dashboard labels change now and then. Where a label below might differ, it says "verify in dashboard".
 
@@ -21,7 +21,7 @@ Dashboard labels change now and then. Where a label below might differ, it says 
 3. Click **Connect GitHub** and authorise Cloudflare. Choose **Only select repositories** and pick only `personal-website-v2`.
 4. Select the repo and click **Begin setup**.
 5. Fill in: Project name (for example `teijekoolenbrander`), Production branch `main`, Framework preset **Astro**, Build command `npm run build`, Build output directory `dist`.
-6. Under **Environment variables (advanced)**, add `NODE_VERSION` = `22` as a fallback. The `.node-version` file should already do this, but the variable is a safe backup.
+6. Under **Environment variables (advanced)**, add `NODE_VERSION` = `22.22.0` as a fallback. The `.node-version` file should already do this, but the variable is a safe backup.
 7. Click **Save and Deploy**. Wait a few minutes.
 8. Open the `https://<project-name>.pages.dev` link. The site should load.
 
@@ -86,7 +86,7 @@ Commit and push to `main`. Cloudflare rebuilds and the site is live in a minute 
 
 | Problem | Likely cause and fix |
 |---|---|
-| Build fails with a Node version error | Astro 7 needs Node 22.22 or newer. Set the variable `NODE_VERSION` = `22` (Project -> Settings -> Variables and Secrets) and retry the deploy. Verify in dashboard that the build system version is the latest (v3). |
+| Build fails with a Node version error | Astro 7 needs Node 22.22 or newer. Set the variable `NODE_VERSION` = `22.22.0` (Project -> Settings -> Variables and Secrets) and retry the deploy. Verify in dashboard that the build system version is the latest (v3). |
 | "Too many redirects" in the browser | SSL/TLS mode is Flexible. Set it to **Full** (SSL/TLS -> Overview). |
 | Custom domain stuck on "Pending" | Nameservers not active yet, or a leftover DNS record at the same name. In Cloudflare DNS, delete old `A`/`CNAME` records for `www` or `@` that point to GoDaddy. |
 | Email stopped working | MX/TXT records missing in Cloudflare DNS. Re-add them from GoDaddy's DNS list (B1 step 3). MX records must be "DNS only" (grey cloud). |
