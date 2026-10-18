@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Pure static output for Apache shared hosting (GoDaddy). No adapter.
+// Pure static output, hosted on Cloudflare Pages. No adapter.
 export default defineConfig({
   site: 'https://www.teijekoolenbrander.com',
   output: 'static',
