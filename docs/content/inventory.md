@@ -273,7 +273,7 @@ Applied 2026-10-18. Facts supplied by Teije.
   2. I'm Dutch and Chinese, and I was born in Shanghai. Today I'm based in Beijing, New York and Singapore.
   3. I'm always building something. Sometimes it's software, sometimes it's hardware, and sometimes it's both.
 - Meta description: Teije Koolenbrander is a computer engineering student at NYU Tandon (Class of 2027) who is always building something.
-- Subtitle: From the pool to the workbench.
+- Subtitle: Learn more about me. (Owner-written, exact wording from Teije.)
 - Off the clock: I used to swim competitively. These days I play basketball and work on small hardware projects. There's usually music on too. You can see what I'm listening to on Spotify and NetEase. (Links kept.)
 - Timeline (`src/content/milestones.yaml`, newest first, order 1 to 5). Owner-supplied facts, applied 2026-10-18. The swim entries and all placeholders are removed.
   - Now (current): "Building my own company" / "WeChat mini programs, mini games and SaaS." (company unnamed for now)

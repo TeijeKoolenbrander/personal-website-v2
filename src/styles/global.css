@@ -17,6 +17,8 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   tab-size: 4;
+  /* Large screens: 16px up to 1280px wide, then grows 0.5vw per px (19.2px at 1920), capped at 20px (from 2080px). */
+  font-size: clamp(100%, 60% + 0.5vw, 125%);
 }
 
 body,
@@ -445,4 +447,11 @@ svg {
 
 .prose tr:last-child td {
   border-bottom: var(--rule);
+}
+
+/* ---------- Large screens ---------- */
+/* Page-title line drawings: 200x64 viewBox, sized in rem so they scale with the root font size. */
+.mark {
+  width: 12.5rem;
+  height: 4rem;
 }

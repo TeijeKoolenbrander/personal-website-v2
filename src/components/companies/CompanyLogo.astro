@@ -14,7 +14,7 @@ const { logo, mark = 'circle-line', alt = '' } = Astro.props;
   logo ? (
     <Image src={logo} alt={alt} width={72} height={72} class="logo" loading="lazy" />
   ) : (
-    <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true" focusable="false">
+    <svg width="72" height="72" style="width:4.5rem;height:4.5rem" viewBox="0 0 72 72" aria-hidden="true" focusable="false">
       <rect class="ln" x="0.5" y="0.5" width="71" height="71" />
       {mark === 'circle-line' && (
         <>
@@ -40,8 +40,8 @@ const { logo, mark = 'circle-line', alt = '' } = Astro.props;
 
 <style>
   .logo {
-    width: 72px;
-    height: 72px;
+    width: 4.5rem;
+    height: 4.5rem;
     object-fit: cover;
   }
 </style>

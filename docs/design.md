@@ -188,3 +188,7 @@ This matches the About "Off the clock" pattern (rule, h2 left, content right), s
 - Touch targets: filter buttons and nav links need at least 24px height (inline `padding-block: 4px`); social rows are 44px tall.
 - Headings: one `h1` per page, no skipped levels.
 - Reduced motion handled in `global.css`.
+
+## 12. Large screens
+
+The whole design scales proportionally above 1280px. `html { font-size: clamp(100%, 60% + 0.5vw, 125%) }` keeps 16px up to 1280px wide, gives 19.2px at 1920px and caps at 20px from 2080px. Every layout size (`--container` 60rem, `--gutter`, `--col-gap*`, spacing scale, rule offsets, SVG drawings, icons, logos, portrait column) is in `rem`, so the layout looks the same, just bigger: container 960px at 1280, 1152px at 1920, 1200px at 2560. 1px hairline rules, outline widths and the 600px media query stay in `px`. Prose measure stays in rem (`--prose-width` 40rem). Never add new fixed `px` sizes for layout or SVG dimensions; use `rem`. Page-title drawings use the `.mark` class (12.5rem x 4rem). Note: `sizes` in `Picture` cannot use rem; the About portrait uses `27vw` above 1280px.
